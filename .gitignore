@@ -1,0 +1,5 @@
+*.npy
+*.json
+__pycache__/
+.vscode/
+envr/
