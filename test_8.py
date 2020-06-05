@@ -1,5 +1,6 @@
 # test MixProcessor
 import numpy as np
+import pdb
 
 
 class MixProcessor():
@@ -16,20 +17,20 @@ class MixProcessor():
     print()
 
   def saveData(self):
-    np.save(self.train_data, 'data/train_sents_mixed.npy')
-    np.save(self.train_label, 'data/train_labels_onehot_mixed.npy')
-    np.save(self.valid_data, 'data/valid_sents_mixed.npy')
-    np.save(self.valid_label, 'data/valid_labels_onehot_mixed.npy')
+    np.save('data/train_sents_mixed.npy', self.train_data)
+    np.save('data/train_labels_onehot_mixed.npy', self.train_label)
+    np.save('data/valid_sents_mixed.npy', self.valid_data)
+    np.save('data/valid_labels_onehot_mixed.npy', self.valid_label)
 
 
 if __name__ == '__main__':
   train_paths = [
-      'data/train_sents_l.npy', 'data/train_sents_s.npy',
-      'data/train_labels_onehot_l.npy', 'data/train_labels_onehot_s.npy'
+      'data/train_sents_l.npy', 'data/train_sents_xs.npy',
+      'data/train_labels_onehot_l.npy', 'data/train_labels_onehot_xs.npy'
   ]
   valid_paths = [
-      'data/valid_sents_l.npy', 'data/valid_sents_s.npy',
-      'data/valid_labels_onehot_l.npy', 'data/valid_labels_onehot_s.npy'
+      'data/valid_sents_l.npy', 'data/valid_sents_xs.npy',
+      'data/valid_labels_onehot_l.npy', 'data/valid_labels_onehot_xs.npy'
   ]
   mp = MixProcessor(train_paths, valid_paths)
   mp.saveData()
