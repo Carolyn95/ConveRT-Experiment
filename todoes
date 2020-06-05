@@ -1,4 +1,15 @@
 * prepare data
 * prepare environment
+* unit test
+    * unit test command
+        * `python -m unittest encoder_utils_test.py`
+        * `python -m unittest encoder_client_test.py` (faile, 2 errors)
+        * `python -m unittest encoder_layers_test.py`
 * try ConveRT on small set
-* try USE and ConveRT on large set
+* get stats of memory usage and training time
+
+* prepare data: large set + small set | large set only | small set only 
+* try USE on large set (padding & batch norm)
+* improve accuracy
+* ConveRT on large set
+* compare stats of memory usage and training time 
