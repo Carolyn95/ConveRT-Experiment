@@ -9,7 +9,7 @@
 * get stats of memory usage and training time
 
 * prepare data: large set + small set | large set only | small set only 
-* try USE on large set (padding & batch norm)
+* try USE on large set (padding & batch norm) | (average & not average)
 * improve accuracy
 * ConveRT on large set
 * compare stats of memory usage and training time 
