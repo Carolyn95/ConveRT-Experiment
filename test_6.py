@@ -69,17 +69,22 @@ class JsonProcessor():
     valid_labels_temp = []
     for i, tl in enumerate(self.train_labels):
       if tl.lower() in loi:
-        train_sents_temp.append(self.train_sents[i])
+        train_sents_temp.append(' '.join(self.train_sents[i]))
         train_labels_temp.append(self.train_labels[i])
     for i, tl in enumerate(self.valid_labels):
       if tl.lower() in loi:
-        valid_sents_temp.append(self.valid_sents[i])
+        valid_sents_temp.append(' '.join(self.valid_sents[i]))
         valid_labels_temp.append(self.valid_labels[i])
 
-    self.train_sents = train_sents_temp
-    self.train_labels = train_labels_temp
-    self.valid_sents = valid_sents_temp
-    self.valid_labels = valid_labels_temp
+    # self.train_sents, self.train_labels, self.valid_sents, self.valid_labels =
+    self.train_sents = []
+    self.valid_sents = []
+    self.train_labels = []
+    self.valid_labels = []
+    self.train_sents = train_sents_temp.copy()
+    self.train_labels = train_labels_temp.copy()
+    self.valid_sents = valid_sents_temp.copy()
+    self.valid_labels = valid_labels_temp.copy()
 
   def getDistinctLabel(self):
     # get distinct labels

@@ -79,7 +79,6 @@ class VanillaUSE():
       os.mkdir(filepath)
     except:
       pass
-
     with tf.Session() as sess:
       K.set_session(sess)
       sess.run(tf.global_variables_initializer())
@@ -91,11 +90,11 @@ class VanillaUSE():
                              mode='auto')
       hist = self.model.fit(self.train_x,
                             self.train_y,
-                            validation_split=0.2,
+                            validation_split=0.1,
                             epochs=20,
-                            batch_size=64,
+                            batch_size=32,
                             callbacks=[ckpt])
-
+      # self.valid_x = tf.convert_to_tensor(self.valid_x)
       pred = self.model.predict(self.valid_x)
       self.pred = np.argmax(pred, axis=1)
       self.valid_y_ = np.argmax(self.valid_y, axis=1)

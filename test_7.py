@@ -53,7 +53,7 @@ class ArrayProcessor():
     p = np.random.permutation(len(self.labels_onehot))
     train_split = int(len(p) * 0.8)
 
-    self.sents = np.array(self.data)[p]
+    self.sents = np.array(self.data, dtype=object)[p]
     self.labels_onehot = np.array(self.labels_onehot)[p]
     self.train_sents = self.sents[:train_split]
     self.valid_sents = self.sents[train_split:]
