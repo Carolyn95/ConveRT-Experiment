@@ -25,6 +25,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_recall_fscore_support
 import random
 import time
+from memory_profiler import profile
 
 
 class DataProcessor():

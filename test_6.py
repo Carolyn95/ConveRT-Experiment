@@ -140,6 +140,7 @@ if __name__ == '__main__':
   jp.clipLength()
   jp.processSents()
   jp.filterByLabel()
+  pdb.set_trace()
   jp.getDistinctLabel()
   jp.oneHotLabels()
   jp.randomizeData()

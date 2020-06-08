@@ -10,13 +10,20 @@ import keras.backend as K
 import tensorflow_hub as hub
 from keras.models import Model
 from keras.regularizers import l1
-from keras.layers import Input, Lambda, Dense, Dropout, Reshape
+from keras.layers import Input, Lambda, Dense, Dropout, Reshape, BatchNormalization
 from keras.callbacks import ModelCheckpoint, TensorBoard
+from keras.optimizers import Adam
 import sklearn
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_recall_fscore_support
 import random
 import time
+from memory_profiler import profile
+
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # remove logging info
+import warnings
+warnings.filterwarnings('ignore')  # filter out warnings
 
 
 class DataReader():
@@ -71,9 +78,28 @@ class VanillaUSE():
                        metrics=['accuracy'])
     print(self.model.summary())
 
+  def createModelBN(self):
+    # create model with batch normalization layers
+    input_text = Input(shape=(1,), dtype='string')
+    embedding = Lambda(self.use_embedding, output_shape=(512,))(input_text)
+    dense = Dense(256, activation='relu',
+                  kernel_regularizer=l1(0.0001))(embedding)
+    dense = BatchNormalization()(dense)
+    dense = Dense(256, activation='tanh')(dense)
+    # dense = Dropout(0.1)(dense)
+    dense = BatchNormalization()(dense)
+    pred = Dense(self.n_labels, activation='softmax')(dense)
+    self.model = Model(inputs=[input_text], outputs=pred)
+    self.model.compile(loss='categorical_crossentropy',
+                       optimizer='adam',
+                       metrics=['accuracy'])
+    # opt = Adam(learning_rate=0.001)  # default is 0.001
+    # self.model.compile(loss='categorical_crossentropy',
+    #                    optimizer=opt,
+    #                    metrics=['accuracy'])
+    print(self.model.summary())
 
-#   @profile
-
+  @profile
   def train(self, filepath):
     try:
       os.mkdir(filepath)
@@ -90,11 +116,10 @@ class VanillaUSE():
                              mode='auto')
       hist = self.model.fit(self.train_x,
                             self.train_y,
-                            validation_split=0.1,
+                            validation_split=0.2,
                             epochs=20,
-                            batch_size=32,
+                            batch_size=128,
                             callbacks=[ckpt])
-      # self.valid_x = tf.convert_to_tensor(self.valid_x)
       pred = self.model.predict(self.valid_x)
       self.pred = np.argmax(pred, axis=1)
       self.valid_y_ = np.argmax(self.valid_y, axis=1)
@@ -115,6 +140,7 @@ class VanillaUSE():
 
     print()
 
+
 if __name__ == '__main__':
   start_time = time.time()
   train_sents_path = 'data/train_sents_mixed.npy'
@@ -129,6 +155,7 @@ if __name__ == '__main__':
   vu = VanillaUSE(dr.train_sents, dr.train_labels, dr.valid_sents,
                   dr.valid_labels)
   vu.createModel()
+  # vu.createModelBN()
   vu.train(filepath='Vanilla_USE')
   vu.consolidateResult(filepath='Vanilla_USE')
   print('Overall Time: ', str(time.time() - start_time), 's')
