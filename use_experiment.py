@@ -143,10 +143,10 @@ class VanillaUSE():
 
 if __name__ == '__main__':
   start_time = time.time()
-  train_sents_path = 'data/train_sents_l.npy'
-  train_labels_path = 'data/train_labels_onehot_l.npy'
-  valid_sents_path = 'data/valid_sents_l.npy'
-  valid_labels_path = 'data/valid_labels_onehot_l.npy'
+  train_sents_path = 'data/train_sents_mixed.npy'
+  train_labels_path = 'data/train_labels_onehot_mixed.npy'
+  valid_sents_path = 'data/valid_sents_mixed.npy'
+  valid_labels_path = 'data/valid_labels_onehot_mixed.npy'
   dr = DataReader(train_sents_path, train_labels_path, valid_sents_path,
                   valid_labels_path)
   # pdb.set_trace()
@@ -154,8 +154,8 @@ if __name__ == '__main__':
 
   vu = VanillaUSE(dr.train_sents, dr.train_labels, dr.valid_sents,
                   dr.valid_labels)
-  # vu.createModel()
-  vu.createModelBN()
+  vu.createModel()
+  # vu.createModelBN()
   vu.train(filepath='Vanilla_USE')
   vu.consolidateResult(filepath='Vanilla_USE')
   print('Overall Time: ', str(time.time() - start_time), 's')
