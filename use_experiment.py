@@ -155,7 +155,7 @@ if __name__ == '__main__':
   vu = VanillaUSE(dr.train_sents, dr.train_labels, dr.valid_sents,
                   dr.valid_labels)
   vu.createModel()
-  # vu.createModelBN()
-  vu.train(filepath='Vanilla_USE')
-  vu.consolidateResult(filepath='Vanilla_USE')
+  vu.createModelBN()
+  vu.train(filepath='Vanilla_USE_BN')
+  vu.consolidateResult(filepath='Vanilla_USE_BN')
   print('Overall Time: ', str(time.time() - start_time), 's')
