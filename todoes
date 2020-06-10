@@ -7,11 +7,4 @@
         * `python -m unittest encoder_layers_test.py`
 * try ConveRT on small set
 * get stats of memory usage and training time
-
-* prepare data: large set + extra-small set | large set only | extra-small set only 
-* try USE on large set (padding & batch norm) | (average & not average)
-* improve accuracy
-* ConveRT on large set
-* compare stats of memory usage and training time 
-
-* visualize result
+* try USE and ConveRT on large set
