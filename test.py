@@ -3,18 +3,24 @@ import numpy as np
 import pdb
 import pandas as pd
 
-valid_sents_path = 'data/valid_sents_xs.npy'
-valid_labels_path = 'data/valid_labels_onehot_xs.npy'
+valid_sents_path = 'data/train_sents_mixed.npy'
+valid_labels_path = 'data/train_labels_onehot_mixed.npy'
 
 sents = np.load(valid_sents_path, allow_pickle=True)
 labels = np.load(valid_labels_path, allow_pickle=True)
-test_dict = {'sents': sents}
-pdb.set_trace()
-df = pd.DataFrame.from_dict(test_dict)
+int_labels = np.argmax(labels, axis=1)
+unknown_indexes = [i for i, l in enumerate(int_labels) if l == 0]
 
-for idx, s in enumerate(sents):
-  if len(s) == 0:
-    print(idx)
+unknow_sents = sents[unknown_indexes]
+unknow_labels = labels[unknown_indexes]
+pdb.set_trace()
+# test_dict = {'sents': unknow_sents}
+# pdb.set_trace()
+# df = pd.DataFrame.from_dict(test_dict)
+
+# for idx, s in enumerate(sents):
+#   if len(s) == 0:
+#     print(idx)
 # last_index = 0
 # next_index = 10
 # while next_index < len(sents):
